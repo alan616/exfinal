@@ -65,8 +65,10 @@ class ModeloEstudiante():
             else:
                 conn = conexion2023()
                 cur = conn.cursor()
-                cur.execute('INSERT INTO clientes values(%s,%s,%s,%s,%s,%s)', (request.json['id_e'], request.json['nombre_e'], request.json['apellido_e'],
-                                                                            request.json['email_e'], request.json['telefono_e'],request.json['direccion_e']))
+                cur.execute("""INSERT INTO clientes (id, nombre, apellido, email, telefono, direccion) VALUES (%s,%s,%s,%s,%s,%s)""",
+            (request.json['id_e'], request.json['nombre_e'], request.json['apellido_e'], request.json['email_e'],
+             request.json['telefono_e'], request.json['direccion_e']))
+
                 conn.commit()
                 conn.close()
                 return jsonify({'mensaje': "cliente registrado.", 'exito': True})

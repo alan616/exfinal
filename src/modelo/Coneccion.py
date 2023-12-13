@@ -1,13 +1,16 @@
-import pymysql
-
+import psycopg2
 from decouple import config
 
 def conexion2023():
-    conex=pymysql.connect(
-                        host=config('BD_HOST'),
-                        user=config('BD_USER'),
-                        password=config('BD_PASSWORD'),
-                        database=config('BD_DB'),
-                        port=3306
-                        )
-    return conex
+    try:
+        connection = psycopg2.connect(
+            dbname=config('BD_DB'),
+            user=config('BD_USER'),
+            password=config('BD_PASSWORD'),
+            host=config('BD_HOST'),
+            port=config('BD_PORT')
+        )
+        return connection
+    except psycopg2.Error as e:
+        print("Error al conectar a PostgreSQL:", e)
+        return None
